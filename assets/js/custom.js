@@ -1,7 +1,7 @@
 wow = new WOW({
     animateClass: 'animated',
     boxClass: 'wow',
-    mobile: false
+    mobile: true
 });
 
 wow.init();
@@ -44,5 +44,19 @@ $(window).scroll(function(e) {
         btnToTop.hide();
         btnToBottom.show();
     }
-
  });
+
+ var sw = this.innerWidth;
+
+ if (sw <= 600) {
+     var elementWow = ['lightSpeedIn', 'fadeInRight', 'bounceInUp', 'bounceInRight', 'bounceInLeft'];
+
+    for (let a = 0; a < elementWow.length; a++) {
+        const element = elementWow[a];
+        $('.' + element).each(function(){
+           $(this).removeClass(element);
+           $(this).addClass('fadeInUp');
+        });
+    }
+
+ }
