@@ -98,7 +98,7 @@ body::-webkit-scrollbar{
     animation: bounceInDown 1s;
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: 1024px) {
     .banner{
         display: none;
     }
@@ -124,5 +124,9 @@ body::-webkit-scrollbar{
 
     .swiper-slide .card-body{
         border: none !important;
+    }
+
+    .display-2{
+        font-size: 45px;
     }
 }

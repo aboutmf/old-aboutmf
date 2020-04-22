@@ -15,7 +15,7 @@ $(window).scroll(function(e) {
 
  var sw = this.innerWidth;
 
- if (sw <= 600) {
+ if (sw <= 1024) {
      var elementWow = ['lightSpeedIn', 'fadeInRight', 'bounceInUp', 'bounceInRight', 'bounceInLeft'];
 
     for (let a = 0; a < elementWow.length; a++) {
@@ -62,11 +62,11 @@ $(document).ready(function(){
                 640: {
                     slidesPerView: 1,
                 },
-                768: {
+                764: {
                     slidesPerView: 1,
                 },
                 1024: {
-                    slidesPerView: 3,
+                    slidesPerView: 1,
                 },
             },
         });
