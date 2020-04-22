@@ -39,8 +39,14 @@ body::-webkit-scrollbar{
     color: black;
 } */
 
-.h-100{
+.h-100vh{
     min-height: 100vh;
+}
+
+#progress-loader{
+    /* animation: progress 5s; */
+    width: 30%;
+    transition: width 3s ease-in !important;
 }
 
 /* .scroll-group{
@@ -96,7 +102,11 @@ body::-webkit-scrollbar{
         display: none;
     }
     #short-story h1{
-        font-size: 50px;
+        font-size: 30px;
+    }
+
+    #short-story h1 b{
+        font-size: 30px;
     }
 
     .socials-button{
@@ -109,5 +119,9 @@ body::-webkit-scrollbar{
 
     .responsive-section{
         min-height: auto !important;
+    }
+
+    .swiper-slide .card-body{
+        border: none !important;
     }
 }
