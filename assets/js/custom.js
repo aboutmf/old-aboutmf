@@ -34,6 +34,7 @@ $(document).ready(function(){
     }, 100, function(){
         setTimeout(() => {
             $('#loader').remove();
+            $('html').css('overflow-y', 'auto');
         }, 3000);
     });
 
@@ -70,7 +71,7 @@ $(document).ready(function(){
             },
         });
 
-        
+
     }, 3100);
 
 
