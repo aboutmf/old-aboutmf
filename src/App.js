@@ -35,7 +35,7 @@ class App extends Component {
     if(path !== "" && has === false) {
       localStorage.setItem('has', true);
 
-      return <Redirect to={path} />
+      this.props.history.push(path);
     }
   }
 
