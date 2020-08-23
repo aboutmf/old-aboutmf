@@ -31,15 +31,11 @@ class App extends Component {
   componentDidMount() {
     let path = localStorage.getItem('path');
     let has = localStorage.getItem('has');
-    alert(has);
 
-    if(has === true) {
-      alert('tes lagi');
-      // localStorage.setItem('has', true);
-
-    } else {
-      alert(window.location.hostname + path);
-      return (<Redirect to={window.location.hostname + path} />);
+    if(has !== true) {
+      const full_path = window.location.hostname + path;
+      localStorage.setItem('has', true);
+      window.location.href = pull_path;
     }
   }
 
