@@ -33,7 +33,7 @@ class App extends Component {
     let has = localStorage.getItem('has');
     alert(has);
 
-    if(has === false) {
+    if(!has) {
       alert('tes lagi');
       localStorage.setItem('has', true);
 
