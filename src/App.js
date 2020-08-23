@@ -33,6 +33,7 @@ class App extends Component {
     const has = localStorage.getItem('has');
 
     if(has !== true) {
+      alert(has);
       localStorage.setItem('has', true);
       localStorage.setItem('path', "");
       window.location.href = path;
