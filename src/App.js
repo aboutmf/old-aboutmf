@@ -35,7 +35,7 @@ class App extends Component {
     if(has !== true) {
       const full_path = window.location.hostname + path;
       localStorage.setItem('has', true);
-      window.location.href = pull_path;
+      window.location.href = full_path;
     }
   }
 
