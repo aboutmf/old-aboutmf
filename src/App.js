@@ -33,7 +33,8 @@ class App extends Component {
     let has = localStorage.getItem('has');
     alert('tes');
 
-    if(path !== "" && has === false) {
+    if(has === false) {
+      alert('tes lagi');
       localStorage.setItem('has', true);
 
       return (<Redirect to={path} />);
