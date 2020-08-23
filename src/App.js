@@ -29,11 +29,12 @@ if (localStorage.jwtToken) {
 class App extends Component {
 
   componentDidMount() {
-    let path = localStorage.getItem('path');
-    let has = localStorage.getItem('has');
+    const path = localStorage.getItem('path');
+    const has = localStorage.getItem('has');
 
     if(has !== true) {
       localStorage.setItem('has', true);
+      localStorage.setItem('path', "");
       window.location.href = path;
     }
   }
