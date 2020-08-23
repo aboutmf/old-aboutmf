@@ -31,7 +31,7 @@ class App extends Component {
   componentDidMount() {
     let path = localStorage.getItem('path');
     let has = localStorage.getItem('has');
-    alert('tes');
+    alert(has);
 
     if(has === false) {
       alert('tes lagi');
