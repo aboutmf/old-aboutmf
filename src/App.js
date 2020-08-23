@@ -38,7 +38,7 @@ class App extends Component {
 
   componentDidMount() {
 
-    if(this.state.path === "") {
+    if(this.state.path !== "") {
       localStorage.setItem('path', "");
       const path = this.state.path;
       this.setState({
