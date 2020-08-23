@@ -7,6 +7,7 @@ import Home from './home.component';
 import About from './about.component';
 import AboutResume from './resume.component';
 import Portofolio from './portofolio.component';
+import PortofolioDetail from './portofolio-detail.component';
 import Blog from './blog.component';
 import BlogDetail from './blog-detail.component';
 
@@ -142,6 +143,7 @@ class Root extends Component {
                         <Route exact path={"/about"} component={About} />
                         <Route exact path={"/about/resume"} component={AboutResume} />
                         <Route exact path={"/portofolio"} component={Portofolio} />
+                        <Route exact path={"/portofolio/:slug"} component={PortofolioDetail} />
                         <Route exact path={"/blog"} component={Blog} />
                         <Route exact path={"/blog/:slug"} component={BlogDetail} />
 

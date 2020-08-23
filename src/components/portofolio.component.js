@@ -6,6 +6,7 @@ import portofolioService from "../services/portofolio.service";
 import { Spinner } from 'react-bootstrap';
 
 import { Helmet } from 'react-helmet';
+import { Link } from "react-router-dom";
 
 // import { LazyLoadImage as Img } from 'react-lazy-load-image-component';
 // import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -110,14 +111,16 @@ export default class Portofolio extends Component {
                                 {this.state.portofolios.map((portofolio) => (
                                     <div className="card border-0 rounded-0" key={portofolio._id}>
                                         <div className="card-img">
-                                            <div className="portofolio-image-description-hint">
-                                                <div className="portofolio-image-description" dangerouslySetInnerHTML={{ __html: portofolio.description }} />
-                                            </div>
-                                            <img
-                                            src={portofolio.imageUrl}
-                                            alt=""
-                                            effect="blur"
-                                            className="w-100" />
+                                            <Link to="/portofolio/satu">
+                                                <div className="portofolio-image-description-hint">
+                                                    <div className="portofolio-image-description" dangerouslySetInnerHTML={{ __html: portofolio.description }} />
+                                                </div>
+                                                <img
+                                                src={portofolio.imageUrl}
+                                                alt=""
+                                                effect="blur"
+                                                className="w-100" />
+                                            </Link>
                                         </div>
                                         <div className="card-body">
                                             <h3>{portofolio.title}</h3>
@@ -128,7 +131,7 @@ export default class Portofolio extends Component {
                         }
                     </div>
                 </div>
-                <Modal show={this.state.show} animation={true} onHide={this.closeModal} size="lg" dialogClassName="modal-dialog-centered" className="">
+                {/* <Modal show={this.state.show} animation={true} onHide={this.closeModal} size="lg" dialogClassName="modal-dialog-centered" className="">
                     <Modal.Body className="p-0">
                         <div className="closeButton" onClick={this.closeModal}>
                             <button>&times;</button>
@@ -148,7 +151,7 @@ export default class Portofolio extends Component {
                             </div>
                         </div>
                     </Modal.Body>
-                </Modal>
+                </Modal> */}
             </>
         );
     }

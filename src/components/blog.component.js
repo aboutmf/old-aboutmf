@@ -82,7 +82,7 @@ export default class Blog extends Component {
                                 <span className="sr-only">Loading...</span>
                             </Spinner>
                             : 
-                            <div className="row mb-5">
+                            <div className="row mb-5 justify-content-center">
                                 <div className="col-md-8">
                                     { this.state.blogs.map((blog, index) => (
                                         <div className="card blog-card rounded-0 border-0 shadow-sm my-4" key={blog._id}>

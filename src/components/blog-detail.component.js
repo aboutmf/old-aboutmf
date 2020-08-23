@@ -4,6 +4,7 @@ import '../App.css';
 import BlogDataService from '../services/blog.service';
 import { Helmet } from 'react-helmet';
 import { Spinner } from 'react-bootstrap';
+import { Redirect } from "react-router-dom";
 
 export default class BlogDetail extends Component {
 
@@ -22,6 +23,7 @@ export default class BlogDetail extends Component {
             blogThumbnail: "",
             createdBy: "",
             isLoading: true,
+            notFound: false,
         };
     }
 
@@ -34,23 +36,28 @@ export default class BlogDetail extends Component {
     async getBlogDetail(slug) {
         await BlogDataService.detail(slug)
         .then(res => {
-
             if (res.data == null) {
-                
+                this.setState({
+                    isLoading: false,
+                    notFound: true,
+                });
+            } else {
+                this.setState({
+                    id: res.data._id,
+                    blogTitle: res.data.title,
+                    blogThumbnail: res.data.thumbnail,
+                    blogDescription: res.data.description,
+                    blogContent: res.data.content,
+                    createdBy: res.data.created_by,
+                    isLoading: false,
+                });
             }
 
-            this.setState({
-                id: res.data._id,
-                blogTitle: res.data.title,
-                blogThumbnail: res.data.thumbnail,
-                blogDescription: res.data.description,
-                blogContent: res.data.content,
-                createdBy: res.data.created_by,
-                isLoading: false,
-            });
         })
         .catch(e => {
-            console.log(e);
+            this.setState({
+                notFound: true
+            });
         });
     }
 
@@ -70,6 +77,11 @@ export default class BlogDetail extends Component {
     }
 
     render() {
+        
+        if (this.state.notFound){
+            return <Redirect to="/404" />
+        }
+
         return (
             <>
                 <Helmet>
@@ -78,7 +90,7 @@ export default class BlogDetail extends Component {
                 </Helmet>
                 <div className="container-fluid">
                     <div className="container">
-                        <div className="row h-banner-100vh align-items-center justify-content-center">
+                        <div className="row h-banner-100vh position-relative align-items-center justify-content-center">
                             { this.state.isLoading ? 
                                 <Spinner animation="border" role="status" className="mx-auto d-block">
                                     <span className="sr-only">Loading...</span>

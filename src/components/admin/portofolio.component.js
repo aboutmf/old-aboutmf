@@ -224,10 +224,6 @@ export default class AdminPortofolio extends Component {
                                                     wrapperClassName="border p-2"
                                                     editorClassName="editor-input"
                                                     onEditorStateChange={this.onChangeDescription}
-                                                    hashtag={{
-                                                        separator: ' ',
-                                                        trigger: '#',
-                                                    }}
                                                 />
                                             </div>
                                             <div className="form-group">
