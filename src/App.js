@@ -33,13 +33,13 @@ class App extends Component {
     let has = localStorage.getItem('has');
     alert(has);
 
-    if(!has) {
+    if(has === true) {
       alert('tes lagi');
       // localStorage.setItem('has', true);
 
     } else {
       alert('what');
-      return (<Redirect to={path} />);
+      return (<Redirect to="/about" />);
     }
   }
 
