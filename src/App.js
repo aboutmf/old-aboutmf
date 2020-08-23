@@ -35,9 +35,9 @@ class App extends Component {
 
     if(!has) {
       alert('tes lagi');
-      localStorage.setItem('has', true);
+      // localStorage.setItem('has', true);
 
-      return (<Redirect to={path} />);
+      // return (<Redirect to={path} />);
     }
   }
 
