@@ -28,7 +28,7 @@ export default class NotFound extends Component {
                         <div className="col-md-6">
                             <h3 className="display-4 font-weight-bold"><span className="">404</span> Page Not Found</h3>
                             <div className="d-flex align-items-center">
-                                <Link to="/v2" className="nav-link p-0 text-dark d-flex align-items-center">
+                                <Link to="/" className="nav-link p-0 text-dark d-flex align-items-center">
                                     <h4 className="m-0 mr-2">&#8592;</h4> <div className="m-0 font-weight-bold">Go Home</div>
                                 </Link>
                             </div>
