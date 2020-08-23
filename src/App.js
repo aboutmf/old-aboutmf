@@ -31,11 +31,12 @@ class App extends Component {
   componentDidMount() {
     let path = localStorage.getItem('path');
     let has = localStorage.getItem('has');
+    alert('tes');
 
     if(path !== "" && has === false) {
       localStorage.setItem('has', true);
 
-      this.props.history.push(path);
+      return (<Redirect to={path} />);
     }
   }
 
