@@ -32,9 +32,9 @@ class App extends Component {
     let path = localStorage.getItem('path');
     let has = localStorage.getItem('has');
 
-    if(path && has == false) {
+    if(path !== "" && has === false) {
       localStorage.setItem('has', true);
-      
+
       return <Redirect to={path} />
     }
   }
