@@ -38,6 +38,8 @@ class App extends Component {
       // localStorage.setItem('has', true);
 
       // return (<Redirect to={path} />);
+    } else {
+      alert('what');
     }
   }
 
