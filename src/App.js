@@ -29,9 +29,11 @@ class App extends Component {
 
   componentDidMount() {
     let path = localStorage.getItem('path');
+    let has = localStorage.getItem('has');
 
-    if(path) {
+    if(path && has == false) {
       localStorage.removeItem('path');
+      localStorage.setItem('has', true);
       window.location.href = path;
     }
   }

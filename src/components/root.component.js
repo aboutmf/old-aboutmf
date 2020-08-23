@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch, NavLink, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, NavLink, Link, BrowserRouter } from 'react-router-dom';
 import { Modal, Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
