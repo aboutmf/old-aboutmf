@@ -27,6 +27,15 @@ if (localStorage.jwtToken) {
 
 class App extends Component {
 
+  componentDidMount() {
+    let path = localStorage.getItem('path');
+
+    if(path) {
+      localStorage.removeItem('path');
+      window.location.href = path;
+    }
+  }
+
   render() {
     return (
       <Provider store={store}>

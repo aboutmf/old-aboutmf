@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, NavLink, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, NavLink, Link } from 'react-router-dom';
 import { Modal, Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -80,7 +80,6 @@ class Root extends Component {
     render() {
         return(
             <>
-                <Router></Router>
                 <Navbar bg="white" onToggle={this.setNavExpand} expanded={this.state.navExpand} expand="lg" className="navbar navbar-expand-sm navbar-light py-3">
                     <Container>
                         <Navbar.Brand href="">MF.</Navbar.Brand>
