@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import store from './store';
 
+import { Redirect } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -32,9 +33,9 @@ class App extends Component {
     let has = localStorage.getItem('has');
 
     if(path && has == false) {
-      localStorage.removeItem('path');
       localStorage.setItem('has', true);
-      window.location.href = path;
+      
+      return <Redirect to={path} />
     }
   }
 
