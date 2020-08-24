@@ -4,7 +4,8 @@ import '../App.css';
 import BlogDataService from '../services/blog.service';
 import { Helmet } from 'react-helmet';
 import { Spinner } from 'react-bootstrap';
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
+import NotFound from './shared/NotFound.component';
 
 export default class BlogDetail extends Component {
 
@@ -79,7 +80,16 @@ export default class BlogDetail extends Component {
     render() {
         
         if (this.state.notFound){
-            return <Redirect to="/404" />
+            return (
+                <>
+                    <Helmet>
+                        <title>{ this.state.blogTitle } - MF.</title>
+                        <meta name="description" content={ this.state.blogDescription } />
+                    </Helmet>
+                    <NotFound />
+                </>
+            );
+
         }
 
         return (
