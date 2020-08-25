@@ -141,7 +141,7 @@ class Root extends Component {
                         </Container>
                     </Navbar>
 
-                    <div className="container-fluid">
+                    <div className="">
                         <Switch>
                             <Route exact path={"/"} component={Home} />
                             <Route exact path={"/about"} component={About} />
