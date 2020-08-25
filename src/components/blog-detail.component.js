@@ -37,7 +37,7 @@ export default class BlogDetail extends Component {
     async getBlogDetail(slug) {
         await BlogDataService.detail(slug)
         .then(res => {
-            if (res.data == null) {
+            if (res.data === null || res.data.published !== true) {
                 this.setState({
                     isLoading: false,
                     notFound: true,
@@ -53,7 +53,6 @@ export default class BlogDetail extends Component {
                     isLoading: false,
                 });
             }
-
         })
         .catch(e => {
             this.setState({

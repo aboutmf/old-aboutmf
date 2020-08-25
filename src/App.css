@@ -214,7 +214,7 @@ pre{
 }
 
 .editor-input{
-  height: 300px !important;
+  height: 41.4rem !important;
 }
 
 .sticky-offset{
@@ -449,4 +449,44 @@ blockquote {
   margin: auto;
   opacity: 0.2;
   filter: grayscale(2);
+}
+
+.blog-status {
+  padding: 0rem 0rem 0rem 0.6rem;
+}
+
+.card-custom,
+.card-custom:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.disabled {
+  pointer-events: none;
+}
+
+.blog-text pre {
+  overflow-x: scroll !important;
+  white-space: pre;
+  padding: 2rem;
+}
+
+.btn.disabled {
+  pointer-events: none;
+}
+
+.thumbnail-preview {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: rgb(221, 221, 221);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+}
+
+.thumbnail-preview img {
+  width: 150%;
 }

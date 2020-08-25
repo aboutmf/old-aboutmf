@@ -85,21 +85,25 @@ export default class Blog extends Component {
                             <div className="row mb-5 justify-content-center">
                                 <div className="col-md-8">
                                     { this.state.blogs.map((blog, index) => (
-                                        <div className="card blog-card rounded-0 border-0 shadow-sm my-4" key={blog._id}>
-                                            <Link to={`/blog/${blog.slug}`} className="card-body p-0" id={blog._id}>
-                                                <div className="container">
-                                                    <div className="row align-items-center">
-                                                        <div className="col-md-3 p-0 col-sm-0 blog-card-thumbnail">
-                                                            <img src={ blog.thumbnail ?? "https://bridge311.qodeinteractive.com/wp-content/uploads/2020/01/p1-img-01.jpg"} alt="" className="" />
+                                        <>
+                                            { blog.published === true && (
+                                                <div className="card blog-card rounded-0 border-0 shadow-sm my-4" key={blog._id}>
+                                                    <Link to={`/blog/${blog.slug}`} className="card-body p-0" id={blog._id}>
+                                                        <div className="container">
+                                                            <div className="row align-items-center">
+                                                                <div className="col-md-3 p-0 col-sm-0 blog-card-thumbnail">
+                                                                    <img src={ blog.thumbnail ?? "https://bridge311.qodeinteractive.com/wp-content/uploads/2020/01/p1-img-01.jpg"} alt="" className="" />
+                                                                </div>
+                                                                <div className="col-md-9 p-4 blog-card-text">
+                                                                    <h4 className="font-weight-bold" dangerouslySetInnerHTML={{ __html: blog.title }} />
+                                                                    <div>{ blog.description }</div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div className="col-md-9 p-4 blog-card-text">
-                                                            <h4 className="font-weight-bold" dangerouslySetInnerHTML={{ __html: blog.title }} />
-                                                            <div>{ blog.description }</div>
-                                                        </div>
-                                                    </div>
+                                                    </Link>
                                                 </div>
-                                            </Link>
-                                        </div>
+                                            ) }
+                                        </>
                                     ))}
                                 </div>
                             </div>

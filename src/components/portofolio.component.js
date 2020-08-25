@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import '../App.css';
 
-import {Modal} from 'react-bootstrap';
 import portofolioService from "../services/portofolio.service";
 import { Spinner } from 'react-bootstrap';
 
@@ -39,8 +38,8 @@ export default class Portofolio extends Component {
         this.retrievePortofolio();
     }
 
-    async retrievePortofolio() {
-        await portofolioService.index()
+    retrievePortofolio() {
+        portofolioService.index()
         .then(response => {
             this.setState({
                 portofolios: response.data,

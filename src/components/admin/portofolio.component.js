@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import '../../App.css';
 import portofolioService from "../../services/portofolio.service";
 
 import { EditorState, ContentState, convertToRaw } from 'draft-js';
@@ -23,6 +22,7 @@ export default class AdminPortofolio extends Component {
         this.showDetail = this.showDetail.bind(this);
         this.editPortofolio = this.editPortofolio.bind(this);
         this.updatePortofolio = this.updatePortofolio.bind(this);
+        this.onChangeInput = this.onChangeInput.bind(this);
 
         this.state = {
             showDetail: false,
@@ -31,6 +31,9 @@ export default class AdminPortofolio extends Component {
             title: "",
             description: EditorState.createEmpty(),
             imageUrl: "",
+            images: [],
+            content: "",
+            slug: "",
             isLoading: true,
         };
     }
@@ -55,6 +58,12 @@ export default class AdminPortofolio extends Component {
         this.setState({
             imageUrl: e.target.value
         })
+    }
+
+    onChangeInput = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
     }
 
     retrievePortofolio() {
@@ -89,7 +98,7 @@ export default class AdminPortofolio extends Component {
     deletePortofolio(id) {
         portofolioService.delete(id)
         .then(response => {
-
+            alert('Berhasil');
         })
         .catch(e => {
 
@@ -215,6 +224,17 @@ export default class AdminPortofolio extends Component {
                                                 onChange={this.onChangeTitle}
                                                 required
                                                 name="title" />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="slug">Slug</label>
+                                                <input
+                                                type="text"
+                                                className="form-control"
+                                                id="slug"
+                                                value={this.state.slug}
+                                                onChange={this.onChangeInput}
+                                                required
+                                                name="slug" />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="description">Description</label>
