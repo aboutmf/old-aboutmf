@@ -198,7 +198,7 @@ class AdminBlogDetail extends Component {
                                         }} />
                                     </div>
                                     <div className="card mt-3 border-danger d-block d-md-none">
-                                        <div className="card-header bg-white border-0 pt-4">
+                                        <div className="card-header bg-transparent border-0 pt-4">
                                             <h5 className="m-0">Danger Zone</h5>
                                         </div>
                                         <div className="card-body pt-1">
@@ -290,7 +290,7 @@ class AdminBlogDetail extends Component {
                                         </div>
                                     </div>
                                     <div className="card mt-3 border-danger d-none d-md-block">
-                                        <div className="card-header bg-white border-0 pt-4">
+                                        <div className="card-header bg-transparent border-0 pt-4">
                                             <h5 className="m-0">Danger Zone</h5>
                                         </div>
                                         <div className="card-body pt-1">
