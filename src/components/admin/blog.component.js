@@ -41,7 +41,7 @@ export default class AdminBlog extends Component {
     render() {
         return (
             <div className="row justify-content-center mb-5 mt-md-3 mt-0">
-                <div className="col-md-6">
+                <div className="col-md-6 px-0 px-md-2">
                         { this.state.isLoading ? (
                             <Spinner animation="border" role="status" className="mx-auto spinner-loading my-3 d-block">
                                 <span className="sr-only">Loading...</span>
@@ -49,7 +49,7 @@ export default class AdminBlog extends Component {
                         ) : (
                             <>
                                 <div className="card border-0 sticky-top">
-                                    <div className="card-header border-0 rounded shadow-sm text-right d-flex justify-content-between align-items-center">
+                                    <div className="card-header border-0 rounded text-right d-flex justify-content-between align-items-center">
                                         <div>
                                             <h5 className="mb-0">Blog List</h5>
                                         </div>

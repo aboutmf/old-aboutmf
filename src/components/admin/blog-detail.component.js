@@ -145,7 +145,7 @@ class AdminBlogDetail extends Component {
         }
 
         return (
-            <div className="container-fluid mb-5 mt-3">
+            <div className="mb-5 mt-3 px-0 px-md-3">
                 { this.state.isLoading ? (
                     <Spinner animation="border" role="status" className="mx-auto spinner-loading my-4 d-block">
                         <span className="sr-only">Loading...</span>
@@ -174,44 +174,41 @@ class AdminBlogDetail extends Component {
                         </div>
                         <div className="col-md-4 order-1 order-md-2 my-3">
                             <div className="card border-0 bg-light">
-                                { this.state.notification === true ? (
-                                    <Alert show={ this.state.notification } variant={ this.state.message.type } className="d-flex align-items-center justify-content-between">
-                                        <div className="d-flex align-items-center">
-                                            <Icon.InfoCircleFill className="text-success mr-2" /> { this.state.message.message }
-                                        </div>
-                                        <div>
-                                            <button onClick={() => this.setState({ notification: false})} className={"btn btn-sm btn-" + this.state.message.type}>
-                                                Close
-                                            </button>
-                                        </div>
-                                    </Alert>
-                                ) : (
-                                    <div className="card-header border-0 bg-light text-right d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <a className={"d-flex align-items-center " + (this.state.linkActive === 'false' ? 'disabled text-danger' : '') } target="_blank" href={`../../#/blog/${this.state.slug}`}>
-                                                <Icon.BoxArrowInUpRight />
-                                                <span className="ml-2">{ this.state.linkActive === 'false' ? 'not published' : 'open blog' }</span>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <button className="btn btn-sm btn-primary rounded-pill" onClick={this.saveBlog}>
-                                                { this.state.saveLoading && (
-                                                    <Spinner
-                                                    as="span"
-                                                    animation="border"
-                                                    size="sm"
-                                                    role="status"
-                                                    aria-hidden="true"
-                                                    className="mr-2"
-                                                    />
-                                                ) }
-                                                <span>
-                                                    Save
-                                                </span>
-                                            </button>
-                                        </div>
+                                <Alert show={ this.state.notification } variant={ this.state.message.type } className="d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-center">
+                                        <Icon.InfoCircleFill className="text-success mr-2" /> { this.state.message.message }
                                     </div>
-                                ) }
+                                    <div>
+                                        <button onClick={() => this.setState({ notification: false})} className={"btn btn-sm btn-" + this.state.message.type}>
+                                            Close
+                                        </button>
+                                    </div>
+                                </Alert>
+                                <div className="card-header border-0 bg-light text-right d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <a className={"d-flex align-items-center " + (this.state.linkActive === 'false' ? 'disabled text-danger' : '') } target="_blank" href={`../../#/blog/${this.state.slug}`}>
+                                            <Icon.BoxArrowInUpRight />
+                                            <span className="ml-2">{ this.state.linkActive === 'false' ? 'not published' : 'open blog' }</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <button className="btn btn-sm btn-primary rounded-pill" onClick={this.saveBlog}>
+                                            { this.state.saveLoading && (
+                                                <Spinner
+                                                as="span"
+                                                animation="border"
+                                                size="sm"
+                                                role="status"
+                                                aria-hidden="true"
+                                                className="mr-2"
+                                                />
+                                            ) }
+                                            <span>
+                                                Save
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
                                 <div className="card-body">
                                     <div className="form-group row">
                                         <div className="col-sm-8 order-2 order-md-1">
@@ -235,16 +232,13 @@ class AdminBlogDetail extends Component {
                                             <option value="false">Not Published</option>
                                         </select>
                                     </div>
-                                    <div className="form-group row">
-                                        <label htmlFor="thumbnail" className="col-sm-4 col-form-label">Created At</label>
-                                        <div className="col-sm-8">
-                                            <input className="form-control border-0 shadow-sm bg-white" disabled value={ moment(this.state.created_at).format('h:mm, DD-MM-YYYY') } />
-                                        </div>
+                                    <div className="text-muted mt-4">
+                                        <small>Latest update at <i>{ moment(this.state.created_date).format('DD-MM-YYYY hh:mm') }</i> by <b>{ this.props.auth.user.name }</b></small>
                                     </div>
                                 </div>
                             </div>
-                            <div className="card mt-3 border-danger bg-light">
-                                <div className="card-header bg-light border-0">
+                            <div className="card mt-3 border-danger">
+                                <div className="card-header bg-white border-0 pt-4">
                                     <h5 className="m-0">Danger Zone</h5>
                                 </div>
                                 <div className="card-body pt-1">
