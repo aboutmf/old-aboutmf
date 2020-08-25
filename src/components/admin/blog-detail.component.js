@@ -243,12 +243,12 @@ class AdminBlogDetail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="card mt-3 border-danger">
-                                <div className="card-header bg-white border-0">
-                                    <h5 className="m-0">Danger Area</h5>
+                            <div className="card mt-3 border-danger bg-light">
+                                <div className="card-header bg-light border-0">
+                                    <h5 className="m-0">Danger Zone</h5>
                                 </div>
-                                <div className="card-body">
-                                    <p>Delete this blog? Write down the <b>{ this.state.title }</b> in input box below.</p>
+                                <div className="card-body pt-1">
+                                    <p>Delete this blog? please type <b>{ this.state.title }</b> to confirm in input box below.</p>
                                     <input className="form-control border-0 shadow-sm" placeholder="Type here ..." value={this.state.confirmDelete} onChange={this.confirmDelete} />
                                     <div className="text-right">
                                         <button className={"btn btn-outline-danger rounded-pill mt-3 " + (this.state.btnDelete === false ? "disabled" : "")} onClick={this.deleteBlog}>

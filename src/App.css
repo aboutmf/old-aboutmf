@@ -214,7 +214,7 @@ pre{
 }
 
 .editor-input{
-  height: 41.4rem !important;
+  min-height: 26.4rem !important;
 }
 
 .sticky-offset{
