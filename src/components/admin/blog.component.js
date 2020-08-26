@@ -24,6 +24,7 @@ export default class AdminBlog extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0,0);
         this.getBlogs();
     }
 
@@ -34,6 +35,8 @@ export default class AdminBlog extends Component {
                 blogs: res.data,
                 isLoading: false,
             });
+
+            window.scrollTo(0,0);
         })
         .catch(() => {
             this.setState({

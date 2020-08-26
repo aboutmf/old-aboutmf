@@ -15,7 +15,6 @@ import htmlToDraft from 'html-to-draftjs';
 import { converToSlug, isValidImage } from './Helper';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { format } from 'path';
 
 class AdminBlogDetail extends Component {
     constructor(props) {
@@ -68,8 +67,8 @@ class AdminBlogDetail extends Component {
         this.getBlog(this.props.match.params.id);
     }
 
-    getBlog(id) {
-        BlogDataService.show(id)
+    async getBlog(id) {
+        await BlogDataService.show(id)
         .then(res => {
             this.setState({
                 id: res.data._id,
@@ -177,8 +176,20 @@ class AdminBlogDetail extends Component {
                             </div>
                         </div>
                         <div className="container-fluid">
+                            <div className="d-block d-md-none mt-4">
+                                <Alert show={ this.state.notification } variant={ this.state.message.type } className="d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-start">
+                                        <Icon.InfoCircleFill className="text-success mr-2" /> { this.state.message.message }
+                                    </div>
+                                    <div>
+                                        <button onClick={() => this.setState({ notification: false})} className={"btn btn-sm btn-" + this.state.message.type}>
+                                            Close
+                                        </button>
+                                    </div>
+                                </Alert>
+                            </div>
                             <div className="row mx-0 px-0">
-                                <div className="col-md-8 order-2 order-md-1 my-3 px-0 px-md-3">
+                                <div className="col-md-8 order-1 order-md-1 my-3 px-0 px-md-3">
                                     <div className="form-group row">
                                         <label htmlFor="title" className="col-sm-1 col-form-label">Title</label>
                                         <div className="col-sm-11">
@@ -197,36 +208,12 @@ class AdminBlogDetail extends Component {
                                             trigger: '#',
                                         }} />
                                     </div>
-                                    <div className="card mt-3 border-danger d-block d-md-none">
-                                        <div className="card-header bg-transparent border-0 pt-4">
-                                            <h5 className="m-0">Danger Zone</h5>
-                                        </div>
-                                        <div className="card-body pt-1">
-                                            <p>Delete this blog? please type <b>{ this.state.title }</b> to confirm in input box below.</p>
-                                            <input className="form-control border-0 shadow-sm" placeholder="Type here ..." value={this.state.confirmDelete} onChange={this.confirmDelete} />
-                                            <div className="text-right">
-                                                <button className={"btn btn-outline-danger rounded-pill mt-3 " + (this.state.btnDelete === false ? "disabled" : "")} onClick={this.deleteBlog}>
-                                                    { this.state.deleteLoading && (
-                                                        <Spinner
-                                                        as="span"
-                                                        animation="border"
-                                                        size="sm"
-                                                        role="status"
-                                                        aria-hidden="true"
-                                                        className="mr-2"
-                                                        />
-                                                    ) }
-                                                    <span>Delete</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                                <div className="col-md-4 order-1 order-md-2 my-3 px-0 px-md-3">
+                                <div className="col-md-4 order-2 order-md-2 my-3 px-0 px-md-3">
                                     <div className="card border-0 bg-light">
-                                        <div className="">
+                                        <div className="d-none d-md-block">
                                             <Alert show={ this.state.notification } variant={ this.state.message.type } className="d-flex align-items-center justify-content-between">
-                                                <div className="d-flex align-items-center">
+                                                <div className="d-flex align-items-start">
                                                     <Icon.InfoCircleFill className="text-success mr-2" /> { this.state.message.message }
                                                 </div>
                                                 <div>
@@ -289,7 +276,7 @@ class AdminBlogDetail extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card mt-3 border-danger d-none d-md-block">
+                                    <div className="card mt-3 border-danger">
                                         <div className="card-header bg-transparent border-0 pt-4">
                                             <h5 className="m-0">Danger Zone</h5>
                                         </div>
