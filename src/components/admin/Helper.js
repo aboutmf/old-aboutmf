@@ -6,15 +6,3 @@ export function converToSlug(title) {
             .replace(/-+/g, '-') + "-" + (new Date().getTime()).toString(36);
     return str;
 }
-
-export function isValidImage(image) {
-    var imageData = new Image();
-    imageData.src = image;
-
-    if (imageData.height === 0) {
-        return "false";
-    } else {
-        return "true";
-    }
-
-}

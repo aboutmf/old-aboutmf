@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 
 import { Helmet } from 'react-helmet';
 import { Spinner } from 'react-bootstrap';
+
+import moment from 'moment';
+
 import Carousel from 'nuka-carousel';
+
+import portofolioService from '../services/portofolio.service';
 
 class PortofolioDetail extends Component {
 
@@ -10,9 +15,16 @@ class PortofolioDetail extends Component {
         super(props);
 
         this.parralax = this.parralax.bind(this);
+        this.getPortofolio = this.getPortofolio.bind(this);
 
         this.state = {
-            isLoading: false
+            isLoading: false,
+            title: "",
+            description: "",
+            thumbnail: "",
+            content: "",
+            images: [],
+            created_date: "",
         }
     }
 
@@ -20,9 +32,28 @@ class PortofolioDetail extends Component {
         window.scrollTo(0,0);
         window.addEventListener('scroll', this.parralax);
 
+        this.getPortofolio(this.props.match.params.slug);
     }
 
-    async parralax () {
+    getPortofolio(slug) {
+        portofolioService.detail(slug)
+        .then(res => {
+            this.setState({
+                title: res.data.title,
+                description: res.data.description,
+                thumbnail: res.data.imageUrl,
+                content: res.data.content,
+                images: res.data.images,
+                created_date: res.data.created_date,
+                isLoading: false,
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
+    parralax () {
 
         try {
             let yPos;
@@ -41,10 +72,11 @@ class PortofolioDetail extends Component {
         return(
             <>
                 <Helmet>
-                    <title>Project Pertama - MF.</title>
-                    <meta name="description" content="Ini isinya projectkloh" />
+                    <title>{ this.state.title } - MF.</title>
+                    <meta name="description" content={ this.state.description } />
                 </Helmet>
-                <div className="container-fluid mb-5">
+                <div>
+
                     <div className="container">
                         <div className="row h-banner-100vh align-items-center justify-content-center">
                             { this.state.isLoading ? 
@@ -53,54 +85,42 @@ class PortofolioDetail extends Component {
                                 </Spinner>
                             :
                                 <>
-                                <div className="text-background">
-                                    <img src="https://bridge311.qodeinteractive.com/wp-content/uploads/2020/01/p1-img-01.jpg" alt="" className="" />
+                                <div className="image-background">
+                                    <img src={ this.state.thumbnail } alt="" className="" />
                                 </div>
                                 <div className="col-md-6">
-                                    <h3 className="display-4 font-weight-bold banner-title wow fadeInUp">PROJECT PERTAMA</h3>
+                                    <h3 className="display-4 font-weight-bold banner-title wow fadeInUp">{ this.state.title }</h3>
                                     <p className="banner-text mt-4">
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos cum architecto repellat itaque laudantium. Sed.
+                                        { this.state.description }
                                     </p>
                                 </div>
                                 </>
                             }
                         </div>
-                        <div className="row">
-                            <div className="col-md-8 my-2">
-                                <h3 className="mb-3">About This Project</h3>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos cum architecto repellat itaque laudantium. Sed. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos cum architecto repellat itaque laudantium. Sed. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos cum architecto repellat itaque laudantium. Sed.</p>
-                                <div className="my-5">
-                                    <Carousel
-                                        slideIndex={this.state.slideIndex}
-                                        afterSlide={slideIndex => this.setState({ slideIndex })}
-                                        // renderCenterLeftControls={({ previousSlide }) => (
-                                        // <button onClick={previousSlide}>
-                                        //     <i className="fa fa-arrow-left" />
-                                        // </button>
-                                        // )}
-                                        // renderCenterRightControls={({ nextSlide }) => (
-                                        // <button onClick={nextSlide}>
-                                        //     <i className="fa fa-arrow-right"/>
-                                        // </button>
-                                        // )}
-                                        >
-                                        <img src="https://demo.qodeinteractive.com/bridge25/wp-content/uploads/2013/10/p-project1-01.jpg" alt="" />
-                                        <img src="https://demo.qodeinteractive.com/bridge25/wp-content/uploads/2013/10/p-project1-02.jpg" alt="" />
-                                        <img src="https://demo.qodeinteractive.com/bridge25/wp-content/uploads/2013/10/p-project1-03.jpg" alt="" />
-                                    </Carousel>
-                                </div>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos cum architecto repellat itaque laudantium. Sed. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos cum architecto repellat itaque laudantium. Sed. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos cum architecto repellat itaque laudantium. Sed.</p>
+                    </div>
+                    <div className="row justify-content-center mb-5 bg-white">
+                        <div className="col-md-8">
+                            <h2 className="mb-2">About This Project</h2>
+                        </div>
+                        <div className="col-md-6 order-2 order-md-1 my-3">
+                            <div className="">
+                                <Carousel
+                                    slideIndex={this.state.slideIndex}
+                                    afterSlide={slideIndex => this.setState({ slideIndex })}
+                                    autoplay={true}
+                                    wrapAround={true} >
+                                    { this.state.images.map((img, index) => (
+                                        <img src={img} alt="" key={index} />
+                                    )) }
+                                </Carousel>
                             </div>
-                            <div className="col-md-4 my-2">
-                                <h5>Title</h5>
-                                <p>Project Pertama</p>
-                                <h5>Date</h5>
-                                <p>Jan, 2020</p>
-                                <h5>Category</h5>
-                                <p>Web Design</p>
-                                <h5>Link</h5>
-                                <p>https://google.com</p>
-                            </div>
+                            <div className="mt-4" dangerouslySetInnerHTML={{__html: this.state.content}} />
+                        </div>
+                        <div className="col-md-2 my-3 order-1 order-md-2">
+                            <h5>Title</h5>
+                            <p>{ this.state.title }</p>
+                            <h5>Date</h5>
+                            <p>{ moment(this.state.created_date).format('MMM, YYYY') }</p>
                         </div>
                     </div>
                 </div>

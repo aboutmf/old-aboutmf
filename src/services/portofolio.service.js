@@ -9,6 +9,10 @@ class PortofolioDataService {
         return http.get(`/portofolios/${id}`);
     }
 
+    detail(id) {
+        return http.get(`/portofolios/show/${id}`);
+    }
+
     create(data) {
         return http.post("/portofolios", data);
     }

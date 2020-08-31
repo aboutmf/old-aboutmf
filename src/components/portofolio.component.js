@@ -88,8 +88,8 @@ export default class Portofolio extends Component {
                     <title>Portofolio - MF.</title>
                     <meta name="description" value="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum quae cumque odit corporis officia consequatur commodi deleniti quisquam facilis error?"></meta>
                 </Helmet>
-                <div className="container-fluid mb-5">
-                    <div className="container">
+                <div className="container px-5 mb-5">
+                    <div className="container px-5">
                         <div className="row h-banner-100vh align-items-center order-1 justify-content-center">
                             <div className="text-background align-self-end">
                                 <h1>"THE PORTOFOLIO.</h1>
@@ -110,7 +110,7 @@ export default class Portofolio extends Component {
                                 {this.state.portofolios.map((portofolio) => (
                                     <div className="card border-0 rounded-0" key={portofolio._id}>
                                         <div className="card-img">
-                                            <Link to="/portofolio/satu">
+                                            <Link to={`./portofolio/${portofolio.slug}`}>
                                                 <div className="portofolio-image-description-hint">
                                                     <div className="portofolio-image-description" dangerouslySetInnerHTML={{ __html: portofolio.description }} />
                                                 </div>

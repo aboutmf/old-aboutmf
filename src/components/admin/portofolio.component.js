@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import portofolioService from "../../services/portofolio.service";
 
+import * as Icon from 'react-bootstrap-icons';
+
 import { EditorState, ContentState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from 'html-to-draftjs';
 import { Spinner } from 'react-bootstrap';
+
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 export default class AdminPortofolio extends Component {
 
@@ -69,6 +74,7 @@ export default class AdminPortofolio extends Component {
     retrievePortofolio() {
         portofolioService.index()
         .then(response => {
+            console.log(response);
             this.setState({
                 portofolios: response.data,
                 isLoading: false,
@@ -163,112 +169,43 @@ export default class AdminPortofolio extends Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className="w-admin">
                 <div className="container">
-
-                    <div className="row mb-5">
-                        <div className="col-md-4">
-                            <div className="card rounded-0 border-0 shadow-sm border">
-                                <div className="card-header border-0 d-flex justify-content-between align-items-center">
-                                    <h5 className="m-0">Portofolio</h5>
-                                    <button className="btn btn-sm btn-primary" onClick={() => this.clearField()}>Create</button>
-                                </div>
-                                <div className="card-body p-0">
-                                    { this.state.isLoading ? (
-                                        <Spinner animation="border" role="status" className="mx-auto spinner-loading my-3 d-block">
-                                            <span className="sr-only">Loading...</span>
-                                        </Spinner>
-                                    ) : (
-                                        <div className="list-group">
-                                            { this.state.portofolios.map((portofolio, index) => (
-                                                <div className={"list-group-item border-left-0 border-right-0 list-group-item-action flex-column align-items-start " + (portofolio._id === this.state.currentId ? " active" : "")} key={portofolio._id}>
-                                                    <div className="d-flex w-100 mb-1 justify-content-between" onClick={() => this.showDetail(portofolio)}>
-                                                        <h6 className="list-item-title" dangerouslySetInnerHTML={{ __html: portofolio.title }} />
+                    <div className="row justify-content-center">
+                        <div className="col-md-7">
+                            { this.state.isLoading ? (
+                                <Spinner animation="border" role="status" className="mx-auto spinner-loading my-4 d-block">
+                                    <span className="sr-only">Loading...</span>
+                                </Spinner>
+                            ) : (
+                                <>
+                                    { this.state.portofolios.sort((a, b) =>  Date.parse(new Date(b.created_date)) - Date.parse(new Date(a.created_date)) ).map((portofolio, index) => (
+                                        <Link className="card-custom" to={`./portofolios/${portofolio._id}`} key={index}>
+                                            <div className="card border-0 shadow-sm my-3">
+                                                <div className="card-body d-flex justify-content-between">
+                                                    <div className="w-100">
+                                                        <h6 className="mb1">{ portofolio.title }</h6>
+                                                        <small>Admin &mdash; Created at : { moment(portofolio.created_date).format('DD/MM/YYYY') }</small>
                                                     </div>
-                                                    <div>
-                                                        <small className="delete-link mr-1">hapus</small>|
-                                                        <small className="edit-link ml-1" onClick={() => this.editPortofolio(portofolio) }>edit</small>
-                                                    </div>
+                                                    <div><Icon.Check className="bg-success rounded-circle text-white" /></div>
                                                 </div>
-                                            )) }
-                                        </div>
-                                    ) }
-                                </div>
-                            </div>
+                                            </div>
+                                        </Link>
+                                    )) }
+                                </>
+                            ) }
                         </div>
-                        <div className="col-md-8">
-                            <div className="card border-0 shadow-sm rounded-0">
-                                <div className="card-body">
-                                    { this.state.showDetail ? (
-                                        <>
-                                            <div className="row">
-                                                <div className="col-md-6">
-                                                    <img src={this.state.imageUrl} className="w-100" alt="" />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h5>{this.state.title}</h5>
-                                                    <hr />
-                                                    <div dangerouslySetInnerHTML={{ __html: this.state.description }} />
-                                                </div>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <div>
-                                            <div className="form-group">
-                                                <label htmlFor="title">Title</label>
-                                                <input
-                                                type="text"
-                                                className="form-control"
-                                                id="title"
-                                                value={this.state.title}
-                                                onChange={this.onChangeTitle}
-                                                required
-                                                name="title" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="slug">Slug</label>
-                                                <input
-                                                type="text"
-                                                className="form-control"
-                                                id="slug"
-                                                value={this.state.slug}
-                                                onChange={this.onChangeInput}
-                                                required
-                                                name="slug" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="description">Description</label>
-                                                <Editor
-                                                    editorState={this.state.description}
-                                                    toolbarClassName="sticky-top sticky-offset"
-                                                    wrapperClassName="border p-2"
-                                                    editorClassName="editor-input"
-                                                    onEditorStateChange={this.onChangeDescription}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="imageUrl">Image URL</label>
-                                                <input
-                                                type="text"
-                                                className="form-control"
-                                                id="imageUrl"
-                                                value={this.state.imageUrl}
-                                                onChange={this.onChangeImageUrl}
-                                                required
-                                                name="imageUrl" />
-                                            </div>
-                                            <div className="text-right">
-                                                { this.state.edited ? (
-                                                    <>
-                                                        <button className="btn btn-sm btn-transparent mr-1">Batal</button>
-                                                        <button className="btn btn-sm btn-success" onClick={this.updatePortofolio}>Perbarui</button>
-                                                    </>
-                                                ) : (
-                                                    <button onClick={this.savePortofolio} className="btn btn-sm btn-primary">Simpan</button>
-                                                ) }
-                                            </div>
-                                        </div>                                    
-                                    ) }
+
+                        <div className="col-md-4">
+                            <div className="card border-0 shadow-sm mt-3">
+                                <div className="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        Total : <strong>{ this.state.portofolios.length }</strong>
+                                    </div>
+                                    <div>
+                                        <Link to="./portofolios/create" className="btn btn-light text-primary rounded btn-icon"><Icon.PencilSquare /> Create</Link>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

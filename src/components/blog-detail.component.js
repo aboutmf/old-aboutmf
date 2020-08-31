@@ -97,7 +97,7 @@ export default class BlogDetail extends Component {
                     <title>{ this.state.blogTitle } - MF.</title>
                     <meta name="description" content={ this.state.blogDescription } />
                 </Helmet>
-                <div className="container-fluid">
+                <div className="">
                     <div className="container">
                         <div className="row h-banner-100vh position-relative align-items-center justify-content-center">
                             { this.state.isLoading ? 
@@ -106,7 +106,7 @@ export default class BlogDetail extends Component {
                                 </Spinner>
                             :
                                 <>
-                                <div className="text-background">
+                                <div className="image-background">
                                     <img src={ this.state.blogThumbnail ?? "https://bridge311.qodeinteractive.com/wp-content/uploads/2020/01/p1-img-01.jpg"} alt="" className="" />
                                 </div>
                                 <div className="col-md-6">

@@ -31,12 +31,9 @@ class Admin extends Component {
     render() {
         return (
             <>
-                <div className="container-fluid">
-                    <div className="container my-5">
+                <div className="w-admin">
+                    <div className="container">
                         <div className="row h-banner-100vh align-items-center order-1 justify-content-center">
-                            <div className="text-background align-self-end">
-                                <h1>WELCOME ADMIN!</h1>
-                            </div>
                             <div className="col-md-6 order-2 order-md-1">
                                 <h3 className="display-4 font-weight-bold banner-title">ADMIN &mdash; welcome to admin page!</h3>
                                 <p className="banner-text">

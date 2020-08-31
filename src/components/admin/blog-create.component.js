@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect, withRouter, Link } from 'react-router-dom';
 
 import BlogDataService from '../../services/blog.service';
 
 import * as Icon from 'react-bootstrap-icons';
 import { Alert, Spinner } from 'react-bootstrap';
 
-import { EditorState, ContentState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from "draftjs-to-html";
-import htmlToDraft from 'html-to-draftjs';
 
 import { converToSlug } from './Helper';
 import { connect } from 'react-redux';
 
 class AdminBlogCreate extends Component {
+
     constructor(props) {
         super(props);
 
@@ -27,16 +27,18 @@ class AdminBlogCreate extends Component {
             title: "",
             slug: "",
             description: "",
-            published: 'true',
+            published: "false",
             thumbnail: "",
             content: EditorState.createEmpty(),
-            created_by: "",
-            created_at: "",
             notification: false,
             message: [],
-            saveLoading: false,
             redirectSuccess: false,
+            btnLoading: false,
         }
+    }
+
+    componentDidMount() {
+        window.scrollTo(0,0);
     }
 
     onChangeInput(e) {
@@ -51,12 +53,8 @@ class AdminBlogCreate extends Component {
         });
     }
 
-    componentDidMount() {
-        window.scrollTo(0,0);
-    }
-
     saveBlog() {
-        this.setState({ saveLoading: true });
+        this.setState({ btnLoading: true });
 
         var data = {
             title: this.state.title,
@@ -74,22 +72,28 @@ class AdminBlogCreate extends Component {
                 this.setState({
                     notification: true,
                     message: { message: res.data.message, type: "danger"},
-                    saveLoading: false,
+                    btnLoading: false,
                 });
             } else {
                 this.setState({
                     notification: true,
                     message: { message: "Your blog successfully created!", type: "success"},
-                    saveLoading: false,
-                    id: res.data._id
+                    btnLoading: false,
+                    id: res.data._id,
                 });
+
+                setTimeout(() => {
+                    this.setState({
+                        redirectSuccess: true,
+                    })
+                }, 1000);
             }
 
         }).catch(err => {
             this.setState({
                 notification: true,
                 message: { message: err.message, type: "danger"},
-                saveLoading: false,
+                btnLoading: false,
             });
         });
     }
@@ -97,111 +101,115 @@ class AdminBlogCreate extends Component {
     render() {
 
         if (this.state.redirectSuccess && this.state.message.type !== 'danger') {
-            return (<Redirect push to={`./${this.state.id}`} />);
+            return (<Redirect push to={`./${this.state.id}`} />)
         }
 
         return (
-            <div className="container-fluid mb-5 mt-3">
-                <div className="row">
-                    <div className="col-md-8 order-2 order-md-1 my-3">
-                        <div className="form-group row">
-                            <label htmlFor="title" className="col-sm-1 col-form-label">Title</label>
-                            <div className="col-sm-11">
-                                <input name="title" value={this.state.title || ''} onChange={this.onChangeInput} className="form-control border-0 shadow-sm" placeholder="Enter the title" autoComplete="off" />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <Editor
-                            editorState={this.state.content}
-                            toolbarClassName="border-0 p-0 m-0"
-                            wrapperClassName="p-2 rounded shadow-sm"
-                            editorClassName="editor-input"
-                            onEditorStateChange={this.onChangeContent}
-                            hashtag={{
-                                separator: ' ',
-                                trigger: '#',
-                            }} />
-                        </div>
-                    </div>
-                    <div className="col-md-4 order-1 order-md-2 my-3">
-                        { this.state.message.type === 'danger' ? (
-                            <Alert show={ this.state.notification } variant={ this.state.message.type }>
-                                <Alert.Heading>How's it going?!</Alert.Heading>
-                                <p>{ this.state.message.message }</p>
-                                <div className="d-flex justify-content-end">
-                                    <button onClick={() => this.setState({ notification: false})} className={"btn btn-sm btn-" + this.state.message.type}>
-                                        Close
-                                    </button>
-                                </div>
-                            </Alert>
-                        ) : (
+            <>
+            <div className="w-admin">
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-md-11 my-3">
                             <Alert show={ this.state.notification } variant={ this.state.message.type } className="d-flex align-items-center justify-content-between">
-                                <div className="d-flex align-items-center">
-                                    <Icon.InfoCircleFill className="text-success mr-2" /> { this.state.message.message }
+                                <div className="d-flex">
+                                    <div className="mr-2">
+                                        <Icon.InfoCircleFill className={"text-" + this.state.message.type} />
+                                    </div>
+                                    <div className="mr-2">
+                                        <p className="mb-0 alert-message">
+                                            { this.state.message.message }
+                                        </p>
+                                    </div>
                                 </div>
                                 <div>
-                                    <button onClick={() => this.setState({ notification: false, redirectSuccess: true})} className={"btn btn-sm btn-" + this.state.message.type}>
+                                    <button onClick={() => this.setState({ notification: false })} className={"btn btn-sm btn-" + this.state.message.type}>
                                         Close
                                     </button>
                                 </div>
                             </Alert>
-                        ) }
-                        <div className="card border-0 bg-light">
-                            { this.state.notification || (
-                                <div className="card-header border-0 bg-light text-right d-flex align-items-center justify-content-between">
-                                    <div>
-                                        <a className={"d-flex align-items-center disabled text-muted"} target="_blank" href="#">
-                                            <Icon.BoxArrowInUpRight />
-                                            <span className="ml-2">hasn't been created yet</span>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <button className="btn btn-sm btn-primary rounded-pill" onClick={this.saveBlog}>
-                                            { this.state.saveLoading && (
-                                                <Spinner
-                                                as="span"
-                                                animation="border"
-                                                size="sm"
-                                                role="status"
-                                                aria-hidden="true"
-                                                className="mr-2"
-                                                />
-                                            ) }
-                                            <span>
-                                                Save
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            ) }
-                            <div className="card-body">
-                                <div className="form-group row">
-                                    <div className="col-sm-8 order-2 order-md-1">
-                                        <label htmlFor="thumbnail">Thumbnail</label>
-                                        <input className="form-control border-0 shadow-sm" onChange={this.onChangeInput} placeholder="Enter the thumbnail" id="thumbnail" name="thumbnail" value={this.state.thumbnail || ''} autoComplete="off" />
-                                    </div>
-                                    <div className="col-md-4 order-1 order-md-2 mb-3 mb-md-0">
-                                        <div className="thumbnail-preview">
-                                            <img src={ this.state.thumbnail || 'https://www.redanglagoon.com/notfound.png' } alt="" />
+                            <div className="card border-0 bg-white mb-3">
+                                <div className="card-body">
+                                    <div className="d-flex align-items-center justify-content-between">
+                                        <nav aria-label="breadcrumb">
+                                            <ol className="breadcrumb bg-transparent m-0 p-0">
+                                                <li className="breadcrumb-item"><Link to="../blogs">Blogs</Link></li>
+                                                <li className="breadcrumb-item active" aria-current="page">Create</li>
+                                            </ol>
+                                        </nav>
+                                        <div>
+                                            <button className="btn btn-light text-primary btn-icon" onClick={this.saveBlog} tabIndex="6">
+                                                { (this.state.btnLoading || false ) ? (
+                                                    <>
+                                                        <Spinner
+                                                        as="span"
+                                                        animation="border"
+                                                        size="sm"
+                                                        role="status"
+                                                        className="mr-2"
+                                                        aria-hidden="true"></Spinner>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Icon.CheckAll />
+                                                    </>
+                                                ) }
+                                            Save</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="description">Description</label>
-                                    <textarea className="border-0 form-control shadow-sm" name="description" placeholder="Enter the description" rows="5" onChange={this.onChangeInput} maxLength="150" id="description" value={this.state.description || ''} />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="published">Status</label>
-                                    <select className="custom-select border-0 shadow-sm" name="published" id="published" onChange={this.onChangeInput} value={this.state.published || ''}>
-                                        <option value="true">Published</option>
-                                        <option value="false">Not Published</option>
-                                    </select>
+                            </div>
+                            <div className="card border-0 bg-white">
+                                <div className="card-body">
+                                    <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Title</label>
+                                        <div className="col-sm-9">
+                                            <input className="form-control border-light shadow-sm" value={this.state.title || ''} name="title" onChange={this.onChangeInput} placeholder="eg. How do i deal with the err ..." autoFocus tabIndex="1" />
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Thumbnail URL</label>
+                                        <div className="col-sm-9">
+                                            <div className="image-preview">
+                                                <img src={this.state.thumbnail || "https://images.unsplash.com/photo-1598620510939-1ee365b7ba12?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"} alt="" />
+                                            </div>
+                                            <input className="form-control border-light shadow-sm" value={this.state.thumbnail || ''} name="thumbnail" onChange={this.onChangeInput} placeholder="eg. https://images.unsplash.com/pho..." tabIndex="2" />
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Status</label>
+                                        <div className="col-sm-9">
+                                            <select className="custom-select border-light shadow-sm" name="published" value={this.state.published || ''} onChange={this.onChangeInput} tabIndex="3">
+                                                <option value="true">Published</option>
+                                                <option value="false">Not Published</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Description</label>
+                                        <textarea className="form-control border-light shadow-sm" rows="3" maxLength="50" name="description" value={this.state.description || ''} onChange={this.onChangeInput} placeholder="eg. In this articles i want to ..." tabIndex="4" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Content</label>
+                                        <Editor
+                                        editorState={this.state.content}
+                                        toolbarClassName="border-0 p-0 m-0"
+                                        wrapperClassName="p-2 rounded shadow-sm bg-white"
+                                        editorClassName="editor-input"
+                                        onEditorStateChange={this.onChangeContent}
+                                        placeholder="eg. Everybody knows about this but some of them are ..."
+                                        tabIndex="5"
+                                        hashtag={{
+                                            separator: ' ',
+                                            trigger: '#',
+                                        }} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </>
         )
     }
 }
